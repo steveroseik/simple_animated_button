@@ -70,6 +70,12 @@ class _ElevatedLayerButtonState extends State<ElevatedLayerButton> {
             });
           }
         },
+        onTapCancel: (){
+          if (!animationCompleted) {
+            animationCompleted = true;
+            setState(() => buttonPressed = false);
+          }
+        },
         onTapUp: (det){
           if (!animationCompleted) {
             animationCompleted = true;
