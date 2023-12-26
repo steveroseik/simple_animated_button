@@ -82,10 +82,7 @@ class _ElevatedLayerButtonState extends State<ElevatedLayerButton> {
                 child: Container(
                   width: (widget.buttonWidth ?? 100) - 10,
                   height: (widget.buttonHeight ?? 40) - 10,
-                  decoration: widget.baseDecoration?.copyWith(
-                        borderRadius: widget.borderRadius,
-                        border: Border.all(color: Colors.black),
-                      ) ??
+                  decoration: widget.baseDecoration??
                       const BoxDecoration(
                         color: Colors.black,
                       ),
@@ -110,10 +107,7 @@ class _ElevatedLayerButtonState extends State<ElevatedLayerButton> {
                   width: (widget.buttonWidth ?? 100) - 10,
                   height: (widget.buttonHeight ?? 100) - 10,
                   alignment: Alignment.center,
-                  decoration: widget.topDecoration?.copyWith(
-                        borderRadius: widget.borderRadius,
-                        border: Border.all(color: Colors.black),
-                      ) ??
+                  decoration: widget.topDecoration??
                       const BoxDecoration(
                         color: Colors.black,
                       ),
