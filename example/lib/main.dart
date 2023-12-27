@@ -29,6 +29,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  GlobalKey childKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +46,12 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               section(
                 child: ElevatedLayerButton(
-                  onClick: () {},
-                  buttonHeight: 60,
-                  buttonWidth: 270,
+                  onClick: () {
+                    print(childKey.currentContext?.size?.height);
+                  },
+                  buttonWidth: 240,
+                  buttonHeight: 100,
+                  aspectRatio: 1/1,
                   animationDuration: const Duration(milliseconds: 200),
                   animationCurve: Curves.ease,
                   topDecoration: BoxDecoration(
@@ -53,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     border: Border.all(),
                   ),
                   topLayerChild: Text(
-                    "ElevatedLayerButton()",
+                    "Elevatesdsdsds",
                     style: monoStyle,
                   ),
                   baseDecoration: BoxDecoration(
@@ -64,7 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               section(
                 child: TrailingButton(
-                  onClick: () {},
+                  onClick: () {
+                    print(childKey.currentContext?.size?.width);
+                  },
                   buttonWidth: 210,
                   buttonHeight: 50,
                   label: 'TrailingButton()',
@@ -81,7 +89,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               section(
                 child: VerticalFillButton(
-                  onClick: () {},
+                  onClick: () {
+                    print('ehy');
+                  },
                   fillingDuration: const Duration(milliseconds: 700),
                   curve: Curves.easeInOut,
                   buttonWidth: 240,

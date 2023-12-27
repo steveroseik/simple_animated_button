@@ -31,10 +31,13 @@ class ElevatedLayerButton extends StatefulWidget {
   /// if anyone wants to add slightly rounded corners
   final BorderRadius? borderRadius;
 
+  final double? aspectRatio;
+
   const ElevatedLayerButton({
     Key? key,
-    required this.buttonHeight,
-    required this.buttonWidth,
+    this.buttonHeight,
+    this.buttonWidth,
+    this.aspectRatio,
     required this.animationDuration,
     required this.animationCurve,
     required this.onClick,
@@ -57,8 +60,14 @@ class _ElevatedLayerButtonState extends State<ElevatedLayerButton> {
 
   bool get _disabled => !_enabled;
 
+  double? height;
+  double? width;
+
+
   @override
   Widget build(BuildContext context) {
+    height = widget.buttonHeight;
+    width = widget.buttonWidth;
     return Opacity(
       opacity: _disabled ? 0.5 : 1,
       child: GestureDetector(
@@ -85,9 +94,60 @@ class _ElevatedLayerButtonState extends State<ElevatedLayerButton> {
             }
           }
         },
-        child: SizedBox(
-          height: widget.buttonHeight,
-          width: widget.buttonWidth,
+        child: (height == null || width == null ) ?
+        SizedBox(
+          height: height != null ? (height! * 1) : null,
+          width: width != null ? (width! * 1) : null,
+          child: AspectRatio(
+            aspectRatio: widget.aspectRatio!,
+            child: Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                Positioned.fill(
+                  bottom: 0,
+                  right: 0,
+                  top: 4,
+                  left: 4,
+                  child: Container(
+                    decoration: widget.baseDecoration??
+                        const BoxDecoration(
+                          color: Colors.black,
+                        ),
+                  ),
+                ),
+                AnimatedPositioned(
+                  bottom: _enabled ? (buttonPressed ? 0 : 4) : 4,
+                  right: _enabled ? (buttonPressed ? 0 : 4) : 4,
+                  top:  _enabled ? (buttonPressed ? 4 : 0) : 4,
+                  left:  _enabled ? (buttonPressed ? 4 : 0) : 4,
+                  duration: widget.animationDuration ??
+                      const Duration(milliseconds: 300),
+                  curve: widget.animationCurve ?? Curves.ease,
+                  onEnd: () {
+                    // if (!animationCompleted) {
+                    //   animationCompleted = true;
+                    //   setState(() => buttonPressed = false);
+                    //   if (_enabled) {
+                    //     widget.onClick!();
+                    //   }
+                    // }
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: widget.topDecoration??
+                        const BoxDecoration(
+                          color: Colors.black,
+                        ),
+                    child: widget.topLayerChild,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+            : SizedBox(
+          height: (height?? 0 * 1.1),
+          width: (width?? 0 * 1.1),
           child: Stack(
             alignment: Alignment.bottomRight,
             children: [
@@ -95,8 +155,8 @@ class _ElevatedLayerButtonState extends State<ElevatedLayerButton> {
                 bottom: 0,
                 right: 0,
                 child: Container(
-                  width: (widget.buttonWidth ?? 100) - 10,
-                  height: (widget.buttonHeight ?? 40) - 10,
+                  width: (width?? 0) * 0.9,
+                  height: (height?? 0) * 0.9,
                   decoration: widget.baseDecoration??
                       const BoxDecoration(
                         color: Colors.black,
@@ -119,8 +179,8 @@ class _ElevatedLayerButtonState extends State<ElevatedLayerButton> {
                   // }
                 },
                 child: Container(
-                  width: (widget.buttonWidth ?? 100) - 10,
-                  height: (widget.buttonHeight ?? 100) - 10,
+                  width: (width?? 0) * 0.9,
+                  height: (height?? 0) * 0.9,
                   alignment: Alignment.center,
                   decoration: widget.topDecoration??
                       const BoxDecoration(
